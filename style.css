@@ -36,24 +36,20 @@ function login() {
   cursor: pointer;
   font-size: 14px;
   transition: all 0.25s ease;
+
+  color: white; /* ✅ THIS FIXES BLACK TEXT */
 }
 
 .player-card:hover {
   transform: scale(1.05);
-  border: 2px solid #ff9800;
+  border: 2px solid #00c6ff;
 }
 
+/* 🔥 SELECTED STYLE */
 .player-card.selected {
-  background: linear-gradient(135deg, #ff9800, #ff5722);
+  background: linear-gradient(135deg, #00c6ff, #0072ff); /* blue gradient */
   color: white;
-  border: 2px solid #fff;
-  box-shadow: 0 0 15px rgba(255,152,0,0.8);
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 15px rgba(0,198,255,0.8);
   transform: scale(1.05);
-}
-}
-
-.player-card.selected {
-  background: #ff9800;
-  color: black;
-  font-weight: bold;
 }
