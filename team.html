@@ -77,7 +77,13 @@ function togglePlayer(player, element) {
   }
 
   updateStats();
-  updateDropdowns();
+  updateDropdowns():
+  const impact = document.getElementById("impact");
+impact.innerHTML = "";
+
+selected.forEach(p => {
+  impact.innerHTML += `<option>${p.name}</option>`;
+});
 }
 
 function updateStats() {
@@ -146,7 +152,7 @@ function submitTeam() {
 
   const captain = document.getElementById("captain").value;
   const vice = document.getElementById("vice").value;
-
+  const impact = document.getElementById("impact").value;
   if(captain === vice){
     alert("Captain and Vice Captain must be different!");
     return;
