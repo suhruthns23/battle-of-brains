@@ -1,13 +1,22 @@
-body {
-  font-family: Arial;
-  text-align: center;
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-  color: white;
+function signup() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+    .then(() => {
+      alert("Signup successful!");
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
 }
 
-button {
-  padding: 10px 20px;
-  margin: 10px;
-  font-size: 16px;
-  border-radius: 8px;
+function login() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
+
+  firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(() => {
+      window.location.href = "dashboard.html";
+    })
+    .catch(err => alert(err.message));
 }
