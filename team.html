@@ -77,6 +77,10 @@ function renderPlayers() {
 }
 
 function togglePlayer(player, element) {
+  if (isLocked()) {
+  alert("⛔ Team selection closed!");
+  return;
+}
   if (selected.includes(player)) {
     selected = selected.filter(p => p !== player);
     element.classList.remove("selected");
