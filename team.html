@@ -155,6 +155,10 @@ function validateTeam() {
 }
 
 function submitTeam() {
+  if (isLocked()) {
+  alert("⛔ Submission closed!");
+  return;
+}
   if (selected.length !== 11) {
     alert("Select exactly 11 players!");
     return;
