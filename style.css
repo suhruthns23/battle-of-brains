@@ -20,3 +20,28 @@ function login() {
     })
     .catch(err => alert(err.message));
 }
+.players-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  padding: 20px;
+}
+
+.player-card {
+  background: #1e2a38;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.player-card:hover {
+  background: #2f3e52;
+}
+
+.player-card.selected {
+  background: #ff9800;
+  color: black;
+  font-weight: bold;
+}
