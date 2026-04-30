@@ -25,6 +25,19 @@
 </div>
 
 <script>
+  function isLocked() {
+  const now = new Date();
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+
+  // Afternoon match lock (3:32 PM)
+  if (hours === 15 && minutes >= 32) return true;
+
+  // Evening match lock (7:32 PM)
+  if (hours === 19 && minutes >= 32) return true;
+
+  return false;
+}
 const players = [
   {name:"Virat Kohli", role:"BAT", overseas:false},
   {name:"Rohit Sharma", role:"BAT", overseas:false},
