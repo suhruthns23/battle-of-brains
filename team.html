@@ -6,20 +6,39 @@
 </head>
 <body>
 
-<h2 style="text-align:center;">🏏 Select Your Playing XI</h2>
+<h2 style="text-align:center;">🏏 Create Your Team</h2>
 
-<div class="players-container" id="players"></div>
+<div id="players" class="players-container"></div>
 
-<div style="text-align:center; margin-top:20px;">
+<div style="text-align:center;">
   <p id="count">Selected: 0 / 11</p>
+  <p id="roles"></p>
+
+  <h3>Select Captain & Vice Captain</h3>
+  <select id="captain"></select>
+  <select id="vice"></select>
+
+  <br><br>
   <button onclick="submitTeam()">Submit Team</button>
 </div>
 
 <script>
 const players = [
-  "Virat Kohli","Rohit Sharma","Gill","Maxwell","Hardik Pandya",
-  "Bumrah","Surya","Rinku","Russell","Dhoni","Jadeja",
-  "Sam Curran","Warner","KL Rahul","Pant"
+  {name:"Virat Kohli", role:"BAT", overseas:false},
+  {name:"Rohit Sharma", role:"BAT", overseas:false},
+  {name:"Gill", role:"BAT", overseas:false},
+  {name:"Warner", role:"BAT", overseas:true},
+  {name:"Maxwell", role:"AR", overseas:true},
+  {name:"Hardik Pandya", role:"AR", overseas:false},
+  {name:"Russell", role:"AR", overseas:true},
+  {name:"Jadeja", role:"AR", overseas:false},
+  {name:"Bumrah", role:"BOWL", overseas:false},
+  {name:"Shami", role:"BOWL", overseas:false},
+  {name:"Rabada", role:"BOWL", overseas:true},
+  {name:"Starc", role:"BOWL", overseas:true},
+  {name:"Siraj", role:"BOWL", overseas:false},
+  {name:"Pant", role:"BAT", overseas:false},
+  {name:"KL Rahul", role:"BAT", overseas:false}
 ];
 
 let selected = [];
@@ -31,7 +50,10 @@ function renderPlayers() {
   players.forEach(p => {
     const div = document.createElement("div");
     div.className = "player-card";
-    div.innerHTML = `<span>${p}</span>`;
+    div.innerHTML = `
+      <b>${p.name}</b><br>
+      <small>${p.role} ${p.overseas ? "🌍" : ""}</small>
+    `;
 
     div.onclick = () => togglePlayer(p, div);
 
@@ -52,8 +74,59 @@ function togglePlayer(player, element) {
     element.classList.add("selected");
   }
 
+  updateStats();
+  updateDropdowns();
+}
+
+function updateStats() {
+  let bat=0, bowl=0, ar=0, overseas=0, overseasBat=0;
+
+  selected.forEach(p => {
+    if(p.role==="BAT") bat++;
+    if(p.role==="BOWL") bowl++;
+    if(p.role==="AR") ar++;
+    if(p.overseas) overseas++;
+    if(p.overseas && p.role==="BAT") overseasBat++;
+  });
+
   document.getElementById("count").innerText =
     `Selected: ${selected.length} / 11`;
+
+  document.getElementById("roles").innerText =
+    `BAT:${bat} | BOWL:${bowl} | AR:${ar} | Overseas:${overseas}`;
+}
+
+function updateDropdowns() {
+  const cap = document.getElementById("captain");
+  const vice = document.getElementById("vice");
+
+  cap.innerHTML = "";
+  vice.innerHTML = "";
+
+  selected.forEach(p => {
+    cap.innerHTML += `<option>${p.name}</option>`;
+    vice.innerHTML += `<option>${p.name}</option>`;
+  });
+}
+
+function validateTeam() {
+  let bat=0, bowl=0, ar=0, overseas=0, overseasBat=0;
+
+  selected.forEach(p => {
+    if(p.role==="BAT") bat++;
+    if(p.role==="BOWL") bowl++;
+    if(p.role==="AR") ar++;
+    if(p.overseas) overseas++;
+    if(p.overseas && p.role==="BAT") overseasBat++;
+  });
+
+  if(bat < 3) return "Minimum 3 batsmen required";
+  if(bowl < 3) return "Minimum 3 bowlers required";
+  if(ar < 1) return "Minimum 1 all-rounder required";
+  if(overseas > 4) return "Max 4 overseas players";
+  if(overseasBat > 2) return "Max 2 overseas batsmen";
+
+  return "OK";
 }
 
 function submitTeam() {
@@ -62,8 +135,26 @@ function submitTeam() {
     return;
   }
 
-  alert("Team submitted (UI only)");
+  const check = validateTeam();
+
+  if(check !== "OK"){
+    alert(check);
+    return;
+  }
+
+  const captain = document.getElementById("captain").value;
+  const vice = document.getElementById("vice").value;
+
+  if(captain === vice){
+    alert("Captain and Vice Captain must be different!");
+    return;
+  }
+
+  alert("Team submitted successfully 😤🔥");
 }
 
 renderPlayers();
 </script>
+
+</body>
+</html>
