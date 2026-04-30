@@ -31,15 +31,15 @@ function renderPlayers() {
   players.forEach(p => {
     const div = document.createElement("div");
     div.className = "player-card";
-    div.innerText = p;
+    div.innerHTML = `<span>${p}</span>`;
 
-    div.onclick = () => selectPlayer(p, div);
+    div.onclick = () => togglePlayer(p, div);
 
     container.appendChild(div);
   });
 }
 
-function selectPlayer(player, element) {
+function togglePlayer(player, element) {
   if (selected.includes(player)) {
     selected = selected.filter(p => p !== player);
     element.classList.remove("selected");
@@ -67,6 +67,3 @@ function submitTeam() {
 
 renderPlayers();
 </script>
-
-</body>
-</html>
