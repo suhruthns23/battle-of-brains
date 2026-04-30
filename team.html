@@ -6,9 +6,67 @@
 </head>
 <body>
 
-<h2 style="text-align:center;">Select Playing XI</h2>
+<h2 style="text-align:center;">🏏 Select Your Playing XI</h2>
 
-<p style="text-align:center;">(UI coming next 😤)</p>
+<div class="players-container" id="players"></div>
+
+<div style="text-align:center; margin-top:20px;">
+  <p id="count">Selected: 0 / 11</p>
+  <button onclick="submitTeam()">Submit Team</button>
+</div>
+
+<script>
+const players = [
+  "Virat Kohli","Rohit Sharma","Gill","Maxwell","Hardik Pandya",
+  "Bumrah","Surya","Rinku","Russell","Dhoni","Jadeja",
+  "Sam Curran","Warner","KL Rahul","Pant"
+];
+
+let selected = [];
+
+function renderPlayers() {
+  const container = document.getElementById("players");
+  container.innerHTML = "";
+
+  players.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "player-card";
+    div.innerText = p;
+
+    div.onclick = () => selectPlayer(p, div);
+
+    container.appendChild(div);
+  });
+}
+
+function selectPlayer(player, element) {
+  if (selected.includes(player)) {
+    selected = selected.filter(p => p !== player);
+    element.classList.remove("selected");
+  } else {
+    if (selected.length >= 11) {
+      alert("Only 11 players allowed!");
+      return;
+    }
+    selected.push(player);
+    element.classList.add("selected");
+  }
+
+  document.getElementById("count").innerText =
+    `Selected: ${selected.length} / 11`;
+}
+
+function submitTeam() {
+  if (selected.length !== 11) {
+    alert("Select exactly 11 players!");
+    return;
+  }
+
+  alert("Team submitted (UI only)");
+}
+
+renderPlayers();
+</script>
 
 </body>
 </html>
